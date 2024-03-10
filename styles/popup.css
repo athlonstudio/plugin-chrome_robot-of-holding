@@ -1,0 +1,34 @@
+@font-face {
+    font-family: 'Noigrotesk';
+    src: url('https://assets.website-files.com/643e6b1c33e4a26a2298c2f8/643e831f43cec21883635d6d_NoiGrotesk-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Noigrotesk';
+    src: url('https://assets.website-files.com/643e6b1c33e4a26a2298c2f8/643e831f79b35f3ad6a762fe_NoiGrotesk-Semibold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+html {
+    background: grey;
+}
+
+body {
+    font-family: Noigrotesk, inter, roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+    padding: 24px 32px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    height: fit-content;
+    width: fit-content;
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 18px;
+}

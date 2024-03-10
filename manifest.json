@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Robot of Holding",
+  "version": "1.0",
+  "description": "Save externally opened links into a clickup board.",
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "icons": {
+    "16": "images/x16.png",
+    "32": "images/x32.png",
+    "48": "images/x48.png",
+    "128": "images/x128.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [ {
+      "js": ["/index.js"],
+      "matches": ["<all_urls>"]
+    } ]
+}
