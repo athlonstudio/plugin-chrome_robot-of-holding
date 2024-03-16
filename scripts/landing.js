@@ -1,1 +1,0 @@
-document.querySelector('#linkImage').src = document.querySelector('[rel*="icon"]').href || '';

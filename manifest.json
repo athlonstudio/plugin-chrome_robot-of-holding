@@ -15,6 +15,13 @@
   "permissions": [
     "storage"
   ],
+  "web_accessible_resources": [
+      "index.html",
+      "./scripts/requests.js",
+      "./scripts/plugin-logic.js",
+      "./styles/index.html",
+      "./styles/popup.css"
+   ],
   "content_scripts": [ {
       "js": ["/index.js"],
       "matches": ["<all_urls>"],
