@@ -30,11 +30,11 @@ const localDataKey = {
     DESCRIPTION: 'description',
 }
 
-function saveToStorage(key, value) {
+function saveToStorage_BOH(key, value) {
     localStorage.setItem(key, JSON.stringify(value))
 }
 
-function getFromStorage(key) {
+function getFromStorage_BOH(key) {
     return JSON.parse(localStorage.getItem(key))
 }
     
@@ -60,12 +60,12 @@ function renderPage_BOH(pageKey) {
     page = pageKey;
     switch (pageKey) {
         case pageKeys['LANDING']:
-            document.querySelector('#list_name').innerHTML = getFromStorage(storageKeys['LIST']).name || 'Select a list…';
+            document.querySelector('#list_name').innerHTML = (getFromStorage_BOH(storageKeys['LIST']) && getFromStorage_BOH(storageKeys['LIST']).name)  || 'Select a list...';
             document.querySelector('#page-link_title').value = localData.title;
             document.querySelector('#page-link_description').value = localData.description;
-            document.querySelector('#page-link_image').src = (document.querySelector('[rel*="icon"]') && document.querySelector('[rel*="icon"]').href) || 'https://placehold.co/60x60'
-            handleTaskInput(document.querySelector('#page-link_title'), localDataKey['TITLE'])
-            handleTaskInput(document.querySelector('#page-link_description'), localDataKey['DESCRIPTION'])
+            document.querySelector('#page-link_image').src = (document.querySelector('[rel*="icon"]') && document.querySelector('[rel*="icon"]').href) || 'https://placehold.co/60x60';
+            handleTaskInput_BOH(document.querySelector('#page-link_title'), localDataKey['TITLE']);
+            handleTaskInput_BOH(document.querySelector('#page-link_description'), localDataKey['DESCRIPTION']);
             break;
             case pageKeys['ONBOARDING']:
             
@@ -88,7 +88,7 @@ function renderListRow_BOH(container, {name, id}, index) {
     container.children[index].innerHTML = name;
     container.children[index].setAttribute('value', id);
     
-    if (id == getFromStorage(storageKeys['LIST']).id) {
+    if (id == getFromStorage_BOH(storageKeys['LIST']).id) {
         container.children[index].classList.add('selected-list');
     }
 }
@@ -118,14 +118,14 @@ function setList_BOH(event) {
 
     const target = event.currentTarget;
     
-    saveToStorage(storageKeys['LIST'], {name: target.innerHTML, id: target.getAttribute('value')});
+    saveToStorage_BOH(storageKeys['LIST'], {name: target.innerHTML, id: target.getAttribute('value')});
     
     if(document.querySelector('.selected-list')){
         document.querySelector('.selected-list').classList.toggle('selected-list');
     }
 
     target.classList.add('selected-list');
-    document.querySelector('#list_name').innerHTML = getFromStorage(storageKeys['LIST']).name;
+    document.querySelector('#list_name').innerHTML = getFromStorage_BOH(storageKeys['LIST']).name;
 }
 
 async function handleCreateTask_BOH(event) {
@@ -135,8 +135,8 @@ async function handleCreateTask_BOH(event) {
     const target = event.currentTarget;
     const pageLocation = window.location.href;
     const pageCategory = queryKeys.filter((pageQuery) => pageLocation.includes(pageQuery.query))[0];
-    const list = getFromStorage(storageKeys['LIST']).id;
-    const userName = getFromStorage(storageKeys['NAME']);
+    const list = getFromStorage_BOH(storageKeys['LIST']).id;
+    const userName = getFromStorage_BOH(storageKeys['NAME']);
     let taskMatching = false;
 
     const task = {
@@ -189,24 +189,30 @@ function handleNameInput_BOH() {
         document.querySelector('#text_save').innerHTML = 'Saved.';
     }
     
-    inputName.value = getFromStorage(storageKeys['NAME']) || '';
-    inputName.addEventListener('keydown', (event) => handleSaveDebounce_BOH(() => saveToStorage(storageKeys['NAME'], event.target.value), saving, disableElements, enableElements));
+    inputName.value = getFromStorage_BOH(storageKeys['NAME']) || '';
+    inputName.addEventListener('keydown', (event) => handleSaveDebounce_BOH(() => saveToStorage_BOH(storageKeys['NAME'], event.target.value), saving, disableElements, enableElements));
 }
 
-function handleTaskInput(element, dataKey) {
+function handleTaskInput_BOH(element, dataKey) {
     let saving = false;
     
     element.value = localData[dataKey];
     element.addEventListener('keydown', (event) => handleSaveDebounce_BOH(() => localData[dataKey] = event.target.value, saving));
 }
-setTimeout(() => {
+
+if(!window.location.href.includes('chrome-extension://')) {
+    setTimeout(() => {
+        renderPage_BOH(pageKeys.LANDING)
+        document.querySelector('#plugin_boh .main').style.cssText = `
+            translate: 0;
+            opacity: 1;
+            visibility: visible;
+        `;
+    }, 400);
+
+    setTimeout(() => {
+        document.querySelector('#plugin_boh').style.overflow = 'visible'
+    }, 600);
+} else {
     renderPage_BOH(pageKeys.LANDING)
-    document.querySelector('#plugin_boh .main').style.cssText = `
-        translate: 0;
-        opacity: 1;
-        visibility: visible;
-    `;
-}, 400);
-setTimeout(() => {
-    document.querySelector('#plugin_boh').style.overflow = 'visible'
-}, 600);
+}
