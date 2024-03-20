@@ -137,11 +137,11 @@ body {
 
 #plugin_boh button {
     font-family: Noigrotesk, inter, roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: .875rem;
     background: none;
     border: none;
     color: var(--text_primary);
     cursor: pointer;
-    font: inherit;
     transition: background 100ms ease-out;
     user-select: none;
 }
@@ -235,11 +235,12 @@ body {
 #plugin_boh .list_selector {
     background-color: var(--background_secondary);
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     padding: .25rem .5rem;
     border-radius: var(--border-radius_primary);
     gap: .25rem;
+    font-size: inherit;
 }
 
 #plugin_boh .list_selector:hover {
@@ -259,6 +260,7 @@ body {
     display: block;
     text-align: left;
     user-select: none;
+    font-weight: 600;
 }
 
 #plugin_boh .page-content_inputs {
@@ -329,6 +331,10 @@ body {
     color: #A3A7A7;
     font-size: .75rem;
     font-weight: 400;
+}
+
+#plugin_boh .icon_wrapper {
+    display: flex;
 }
 
 /*SETTINGS*/

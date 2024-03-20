@@ -1,5 +1,3 @@
-import { createTask, getTasks, getLists } from "./requests.js";
-
 const queryKeys = [
     {
         key: 0,
@@ -24,14 +22,22 @@ const pageKeys = {
     SETTINGS: 'settings',
 };
 const storageKeys = {
-    NAME: 'name',
-    LIST: 'list',
+    NAME: 'boh_name',
+    LIST: 'boh_list',
 }
 const localDataKey = {
     TITLE: 'title',
     DESCRIPTION: 'description',
 }
 
+function saveToStorage(key, value) {
+    localStorage.setItem(key, JSON.stringify(value))
+}
+
+function getFromStorage(key) {
+    return JSON.parse(localStorage.getItem(key))
+}
+    
 let page = pageKeys.LANDING;
 const main = document.querySelector('#plugin_boh .main');
 let clickupListData;
@@ -41,31 +47,20 @@ let localData = {
 };
 let testingStorage = {list: {name: "Default", id: 901701936084}};
 
-function handleClose() {
+function handleClose_BOH() {
     document.getElementById('plugin_boh').remove();
 }
 
-function saveToStorage(key, value) {
-    testingStorage[key] = value;
-    //chrome.storage.sync.set({key, value})
-}
-
-function getFromStorage(key) {
-    return testingStorage[key];
-    //chrome.storage.sync.get(key)
-}
-
-
-function renderPage(pageKey) {
+function renderPage_BOH(pageKey) {
     main.innerHTML = '';
     main.classList.remove(page)
     main.classList.add(pageKey)
     main.appendChild(document.querySelector(`#page_${pageKey}`).content.cloneNode(true));
-    loadIcons();
+    loadIcons_BOH();
     page = pageKey;
     switch (pageKey) {
         case pageKeys['LANDING']:
-            document.querySelector('#list_name').innerHTML = getFromStorage(storageKeys['LIST']).name;
+            document.querySelector('#list_name').innerHTML = getFromStorage(storageKeys['LIST']).name || 'Select a list…';
             document.querySelector('#page-link_title').value = localData.title;
             document.querySelector('#page-link_description').value = localData.description;
             document.querySelector('#page-link_image').src = (document.querySelector('[rel*="icon"]') && document.querySelector('[rel*="icon"]').href) || 'https://placehold.co/60x60'
@@ -76,19 +71,19 @@ function renderPage(pageKey) {
             
             break;
             case pageKeys['SETTINGS']:
-                handleNameInput();
+                handleNameInput_BOH();
             break;
         default:
             break;
     }
 }
 
-function loadIcons() {
+function loadIcons_BOH() {
     const elementsToLoad = [...main.querySelectorAll('[data-load]')];
     elementsToLoad.forEach(element => element.appendChild(document.querySelector(`#icon_${element.dataset.load}`).content.cloneNode(true)));
 }
 
-function renderListRow (container, {name, id}, index) {
+function renderListRow_BOH(container, {name, id}, index) {
     container.appendChild(document.querySelector('#component_list-row').content.cloneNode(true));
     container.children[index].innerHTML = name;
     container.children[index].setAttribute('value', id);
@@ -98,7 +93,7 @@ function renderListRow (container, {name, id}, index) {
     }
 }
 
-async function openList(event) {
+async function openList_BOH(event) {
     event.stopImmediatePropagation();
     event.preventDefault();
 
@@ -106,30 +101,34 @@ async function openList(event) {
     const listContainer = document.querySelector('#clickup-list');
 
     if(!clickupListData) {    
-        await getLists().then((data) => clickupListData = data.lists);
+        await getLists_BOH().then((data) => clickupListData = data.lists);
     }
 
     if (listContainer.children.length === 0){
-        clickupListData.forEach((list, index) => renderListRow(listContainer, list, index))
+        clickupListData.forEach((list, index) => renderListRow_BOH(listContainer, list, index))
     }
 
     target.dataset.open = target.dataset.open !== 'true' ? 'true' : 'false';
     listContainer.classList.toggle('hide')
 }
 
-function setList(event) {
+function setList_BOH(event) {
     event.stopImmediatePropagation();
     event.preventDefault();
 
     const target = event.currentTarget;
     
     saveToStorage(storageKeys['LIST'], {name: target.innerHTML, id: target.getAttribute('value')});
-    document.querySelector('.selected-list').classList.toggle('selected-list');
+    
+    if(document.querySelector('.selected-list')){
+        document.querySelector('.selected-list').classList.toggle('selected-list');
+    }
+
     target.classList.add('selected-list');
     document.querySelector('#list_name').innerHTML = getFromStorage(storageKeys['LIST']).name;
 }
 
-async function handleCreateTask(event) {
+async function handleCreateTask_BOH(event) {
     event.stopImmediatePropagation();
     event.preventDefault();
 
@@ -152,13 +151,12 @@ async function handleCreateTask(event) {
 
     setTimeout(() => document.querySelector('#plugin_boh').style.display = 'none', 2000);
 
-    await getTasks(list).then((data) => {
+    await getTasks_BOH(list).then((data) => {
         taskMatching = !!data.tasks.find((taskItem) => taskItem['custom_fields'][2].value === pageLocation);
     });
 
     if(!taskMatching) {
-        console.log(task);
-        await createTask(userName, list, pageCategory, task);
+        await createTask_BOH(userName, list, pageCategory, task);
     } 
 
     document.querySelector('#plugin_boh').remove();
@@ -166,7 +164,7 @@ async function handleCreateTask(event) {
     
 }
 
-function handleSaveDebounce(saveFunction, saving, disableEl = () => {}, enableEl = () => {}) {
+function handleSaveDebounce_BOH(saveFunction, saving, disableEl = () => {}, enableEl = () => {}) {
     if (!saving) {
         saving = true;
         disableEl();
@@ -179,7 +177,7 @@ function handleSaveDebounce(saveFunction, saving, disableEl = () => {}, enableEl
     }
 }
 
-function handleNameInput() {
+function handleNameInput_BOH() {
     let saving = false;
     const inputName = document.querySelector('#input_name');
     const disableElements = () => {
@@ -192,27 +190,15 @@ function handleNameInput() {
     }
     
     inputName.value = getFromStorage(storageKeys['NAME']) || '';
-    inputName.addEventListener('keydown', (event) => handleSaveDebounce(() => saveToStorage(storageKeys['NAME'], event.target.value), saving, disableElements, enableElements));
+    inputName.addEventListener('keydown', (event) => handleSaveDebounce_BOH(() => saveToStorage(storageKeys['NAME'], event.target.value), saving, disableElements, enableElements));
 }
 
 function handleTaskInput(element, dataKey) {
     let saving = false;
     
     element.value = localData[dataKey];
-    element.addEventListener('keydown', (event) => handleSaveDebounce(() => localData[dataKey] = event.target.value, saving));
+    element.addEventListener('keydown', (event) => handleSaveDebounce_BOH(() => localData[dataKey] = event.target.value, saving));
 }
 
 
-renderPage(pageKeys.LANDING)
-
-globalThis.handleNameInput = handleNameInput;
-globalThis.handleCreateTask = handleCreateTask;
-globalThis.openList = openList;
-globalThis.renderPage = renderPage;
-globalThis.handleClose = handleClose;
-globalThis.pageKeys = pageKeys;
-globalThis.setList = setList;
-globalThis.handleTaskInput = handleTaskInput;
-
-
-globalThis.testingStorage = testingStorage;
+renderPage_BOH(pageKeys.LANDING)

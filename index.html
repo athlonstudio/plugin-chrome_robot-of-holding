@@ -1,17 +1,16 @@
 <div id="plugin_boh">
-  <link rel="stylesheet" href="./styles/popup.css">
-  <script type="module" src="./scripts/plugin-logic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/styles/popup.css">
   <aside class="main">
   </aside>
   <template id="page_landing">
     <div class="content-top_wrapper">
       <h1 class="list-name_wrapper">Save link to 
-        <button class="list_selector" onclick="openList(event)">
+        <button class="list_selector" onclick="openList_BOH(event)">
             <span id="list_name"></span>
-            <span data-load='chevron-down'></span>
+            <span data-load='chevron-down' class="icon_wrapper"></span>
         </button>
       </h1>
-      <button data-load='close' class="icon-button close_button" onclick ='handleClose()'></button>
+      <button data-load='close' class="icon-button close_button" onclick ='handleClose_BOH()'></button>
       <ul id="clickup-list" class="clickup-list_wrapper hide" role="listbox">
       </ul>
     </div>
@@ -22,10 +21,10 @@
           <input id="page-link_description" class="page-content_inputs" name="page-description" placeholder="Add note (optional)…" type="text"></input>
         </div>
     </div>
-    <button class="button-primary" onclick="handleCreateTask(event)">Save</button>
+    <button class="button-primary" onclick="handleCreateTask_BOH(event)">Save</button>
     <div class="content-bottom_wrapper">
       <span data-load='studio-plugins' ></span>
-      <button data-load='settings' class="icon-button" onclick="renderPage(pageKeys['SETTINGS'])"></button>
+      <button data-load='settings' class="icon-button" onclick="renderPage_BOH(pageKeys['SETTINGS'])"></button>
     </div>
   </template>
   <template id="page_onboarding">
@@ -33,9 +32,9 @@
   </template>
   <template id="page_settings">
     <div class="content-top_wrapper">
-      <button data-load='arrow-back' id="button_back" class="icon-button" onclick ='renderPage(pageKeys["LANDING"])'></button>
+      <button data-load='arrow-back' id="button_back" class="icon-button" onclick ='renderPage_BOH(pageKeys["LANDING"])'></button>
       <h1 class="list-name_wrapper">Settings</h1>
-      <button data-load='close' class="icon-button close_button" onclick ='handleClose()'></button>
+      <button data-load='close' class="icon-button close_button" onclick ='handleClose_BOH()'></button>
     </div>
     <div class="input_wrapper">
       <label for="input_name">Name</label>
@@ -48,7 +47,7 @@
     </div>
   </template>
   <template id="component_list-row">
-    <li class="clickup-list_item" onclick="setList(event)"></li>
+    <li class="clickup-list_item" onclick="setList_BOH(event)"></li>
   </template>
   <template id="icon_settings">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
