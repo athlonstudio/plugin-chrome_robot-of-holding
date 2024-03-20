@@ -15,3 +15,6 @@ Will apply a tag to similar links (like Figma, Quip, Drive, and more!).
 3. In Google Chrome, go to Manage Extensions.
 5. On the top right of the page, toggle the "Developer mode".
 6. Click the "Load Unpacked Button" and select the "Robot of Holding Studio Plugins" folder.
+
+## Clickup Links are conveniently stored in one space (for now)
+The Bot of Holding Clickup Board: https://app.clickup.com/8693094/v/s/90170765844
