@@ -23,7 +23,7 @@
       "./styles/popup.css"
    ],
   "content_scripts": [ {
-      "js": ["/index.js"],
+      "js": ["/init.js"],
       "matches": ["<all_urls>"],
       "match_about_blank": false
     } ]
