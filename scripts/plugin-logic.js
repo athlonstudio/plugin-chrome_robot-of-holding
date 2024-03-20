@@ -199,6 +199,14 @@ function handleTaskInput(element, dataKey) {
     element.value = localData[dataKey];
     element.addEventListener('keydown', (event) => handleSaveDebounce_BOH(() => localData[dataKey] = event.target.value, saving));
 }
-
-
-renderPage_BOH(pageKeys.LANDING)
+setTimeout(() => {
+    renderPage_BOH(pageKeys.LANDING)
+    document.querySelector('#plugin_boh .main').style.cssText = `
+        translate: 0;
+        opacity: 1;
+        visibility: visible;
+    `;
+}, 400);
+setTimeout(() => {
+    document.querySelector('#plugin_boh').style.overflow = 'visible'
+}, 600);

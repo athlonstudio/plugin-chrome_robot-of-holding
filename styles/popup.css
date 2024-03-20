@@ -40,6 +40,15 @@ body {
     --border-radius_primary: 4px;
 }
 
+#plugin_boh {
+    display: block;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 999;
+    overflow: hidden;
+}
+
 #plugin_boh .main {
     font-family: Noigrotesk, inter, roboto, -apple-system, BlinkMacSystemFont, sans-serif;
     display: flex;
@@ -47,18 +56,19 @@ body {
     background: white;
     height: fit-content;
     width: fit-content;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
     z-index: 999;
     display: flex;
+    visibility: hidden;
     padding: 2rem 1.5rem;
     gap: 1.25rem;
     color: var(--text_primary);
     max-width: 20dvw;
     min-width: 300px;
     border-radius: var(--border-radius_primary);
-    box-shadow: 0px 0px 4px 0px rgba(25, 34, 34, 0.25);
+    box-shadow: 0px 0px 4px 0px rgba(25, 34, 34, 0.5);
+    opacity: 0;
+    translate: 60% -20%;
+    transition: translate 150ms ease, opacity 100ms ease, visibility 50ms ease;
 }
 
 #plugin_boh h1 {
