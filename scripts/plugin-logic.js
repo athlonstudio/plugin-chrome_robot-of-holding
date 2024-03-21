@@ -66,11 +66,17 @@ function renderPage_BOH(pageKey) {
             document.querySelector('#page-link_image').src = (document.querySelector('[rel*="icon"]') && document.querySelector('[rel*="icon"]').href) || 'https://placehold.co/60x60';
             handleTaskInput_BOH(document.querySelector('#page-link_title'), localDataKey['TITLE']);
             handleTaskInput_BOH(document.querySelector('#page-link_description'), localDataKey['DESCRIPTION']);
+            document.querySelector('.list_selector').addEventListener('click', (event) => openList_BOH(event));
+            document.querySelector('.button_close').addEventListener('click', handleClose_BOH);
+            document.querySelector('#button_save').addEventListener('click', (event) => handleCreateTask_BOH(event));
+            document.querySelector('#button_settings').addEventListener('click', () => renderPage_BOH(pageKeys['SETTINGS']));
             break;
             case pageKeys['ONBOARDING']:
             
             break;
             case pageKeys['SETTINGS']:
+                document.querySelector('#button_back').addEventListener('click', () => renderPage_BOH(pageKeys["LANDING"]));
+                document.querySelector('.button_close').addEventListener('click', handleClose_BOH);
                 handleNameInput_BOH();
             break;
         default:
@@ -86,6 +92,7 @@ function loadIcons_BOH() {
 function renderListRow_BOH(container, {name, id}, index) {
     container.appendChild(document.querySelector('#component_list-row').content.cloneNode(true));
     container.children[index].innerHTML = name;
+    container.children[index].addEventListener('click', (event) => setList_BOH(event));
     container.children[index].setAttribute('value', id);
     
     if (id == getFromStorage_BOH(storageKeys['LIST']).id) {

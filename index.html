@@ -5,12 +5,12 @@
   <template id="page_landing">
     <div class="content-top_wrapper">
       <h1 class="list-name_wrapper">Save link to 
-        <button class="list_selector" onclick="openList_BOH(event)">
+        <button class="list_selector">
             <span id="list_name"></span>
             <span data-load='chevron-down' class="icon_wrapper"></span>
         </button>
       </h1>
-      <button data-load='close' class="icon-button close_button" onclick ='handleClose_BOH()'></button>
+      <button data-load='close' class="button_icon button_close"></button>
       <ul id="clickup-list" class="clickup-list_wrapper hide" role="listbox">
       </ul>
     </div>
@@ -21,10 +21,10 @@
           <input id="page-link_description" class="page-content_inputs" name="page-description" placeholder="Add note (optional)…" type="text"></input>
         </div>
     </div>
-    <button class="button-primary" onclick="handleCreateTask_BOH(event)">Save</button>
+    <button id='button_save' class="button-primary">Save</button>
     <div class="content-bottom_wrapper">
       <span data-load='studio-plugins' ></span>
-      <button data-load='settings' class="icon-button" onclick="renderPage_BOH(pageKeys['SETTINGS'])"></button>
+      <button id="button_settings" data-load='settings' class="button_icon"></button>
     </div>
   </template>
   <template id="page_onboarding">
@@ -32,9 +32,9 @@
   </template>
   <template id="page_settings">
     <div class="content-top_wrapper">
-      <button data-load='arrow-back' id="button_back" class="icon-button" onclick ='renderPage_BOH(pageKeys["LANDING"])'></button>
+      <button data-load='arrow-back' id="button_back" class="button_icon"></button>
       <h1 class="list-name_wrapper">Settings</h1>
-      <button data-load='close' class="icon-button close_button" onclick ='handleClose_BOH()'></button>
+      <button data-load='close' class="button_icon button_close"></button>
     </div>
     <div class="input_wrapper">
       <label for="input_name">Name</label>
@@ -47,7 +47,7 @@
     </div>
   </template>
   <template id="component_list-row">
-    <li class="clickup-list_item" onclick="setList_BOH(event)"></li>
+    <li class="clickup-list_item"></li>
   </template>
   <template id="icon_settings">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

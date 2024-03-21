@@ -179,7 +179,7 @@ body {
     background-color: var(--interactive_pressed);
 }
 
-#plugin_boh .icon-button {
+#plugin_boh .button_icon {
     width: 2rem;
     height: 2rem;
     border-radius: 999px;
@@ -188,11 +188,11 @@ body {
     justify-content: center;
 }
 
-#plugin_boh .icon-button:hover {
+#plugin_boh .button_icon:hover {
     background-color: var(--interactive_secondary);
 }
 
-#plugin_boh .close_button {
+#plugin_boh .button_close {
     position: absolute;
     top: 1rem;
     right: 1rem;
