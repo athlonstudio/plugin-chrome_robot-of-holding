@@ -1,3 +1,9 @@
+if (window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTypes.defaultPolicy) {
+    
+} else if(window.trustedTypes.defaultPolicy.name) {
+
+}
+ 
 const queryKeys = [
     {
         key: 0,
@@ -20,6 +26,7 @@ const pageKeys = {
     LANDING: 'landing',
     ONBOARDING: 'onboarding',
     SETTINGS: 'settings',
+    ERROR: 'error',
 };
 const storageKeys = {
     NAME: 'boh_name',
@@ -71,14 +78,13 @@ function renderPage_BOH(pageKey) {
             document.querySelector('#button_save').addEventListener('click', (event) => handleCreateTask_BOH(event));
             document.querySelector('#button_settings').addEventListener('click', () => renderPage_BOH(pageKeys['SETTINGS']));
             break;
-            case pageKeys['ONBOARDING']:
-            
-            break;
-            case pageKeys['SETTINGS']:
+        case pageKeys['SETTINGS']:
                 document.querySelector('#button_back').addEventListener('click', () => renderPage_BOH(pageKeys["LANDING"]));
                 document.querySelector('.button_close').addEventListener('click', handleClose_BOH);
                 handleNameInput_BOH();
             break;
+        case pageKeys['ONBOARDING']:
+        case pageKeys['ERROR']:
         default:
             break;
     }
@@ -95,7 +101,7 @@ function renderListRow_BOH(container, {name, id}, index) {
     container.children[index].addEventListener('click', (event) => setList_BOH(event));
     container.children[index].setAttribute('value', id);
     
-    if (id == getFromStorage_BOH(storageKeys['LIST']).id) {
+    if (getFromStorage_BOH(storageKeys['LIST']) && id == getFromStorage_BOH(storageKeys['LIST']).id) {
         container.children[index].classList.add('selected-list');
     }
 }
@@ -205,7 +211,12 @@ function handleTaskInput_BOH(element, dataKey) {
     element.addEventListener('keydown', (event) => handleSaveDebounce_BOH(() => localData[dataKey] = event.target.value, saving));
 }
 
-if(!window.location.href.includes('chrome-extension://')) {
+if(window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTypes.defaultPolicy) {
+    window.trustedTypes.createPolicy('default', {
+        createHTML: string => string,
+        createScriptURL: string => string,
+        createScript: string => string,
+    });
     setTimeout(() => {
         renderPage_BOH(pageKeys.LANDING)
         document.querySelector('#plugin_boh .main').style.cssText = `
@@ -219,5 +230,15 @@ if(!window.location.href.includes('chrome-extension://')) {
         document.querySelector('#plugin_boh').style.overflow = 'visible'
     }, 600);
 } else {
-    renderPage_BOH(pageKeys.LANDING)
+    setTimeout(() => {
+        renderPage_BOH(pageKeys.ERROR)
+        document.querySelector('#plugin_boh .main').style.cssText = `
+            translate: 0;
+            opacity: 1;
+            visibility: visible;
+        `;
+    }, 400);
+    setTimeout(() => {
+        document.querySelector('#plugin_boh').remove();
+    }, 2000);
 }

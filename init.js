@@ -1,5 +1,7 @@
 const blacklistedSites = [
-  'zoom.us/j/'
+  'zoom.us/j/',
+  'chrome-extension://',
+  'chrome://',
 ];
 
 if (!blacklistedSites.find((query) => window.location.href.includes(query)) && window.history.length <= 1 && !document.referrer) {

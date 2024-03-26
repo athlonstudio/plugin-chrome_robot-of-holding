@@ -42,15 +42,11 @@ body {
 
 #plugin_boh {
     display: block;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
+    position: fixed;
+    top: 16px;
+    right: 16px;
     z-index: 2147483647;
     overflow: hidden;
-}
-
-#plugin_boh *{
-    font-size: 100% !important;
 }
 
 #plugin_boh .main {
@@ -63,8 +59,8 @@ body {
     z-index: 999;
     display: flex;
     visibility: hidden;
-    padding: 2rem 1.5rem;
-    gap: 1.25rem;
+    padding: 32px 24px;
+    gap: 20px;
     color: var(--text_primary);
     max-width: 20dvw;
     min-width: 300px;
@@ -75,10 +71,15 @@ body {
     transition: translate 150ms ease, opacity 100ms ease, visibility 50ms ease;
 }
 
+#plugin_boh a {
+    color: var(--token_blue);
+    text-decoration: underline;
+}
+
 #plugin_boh h1 {
     font-family: Noigrotesk, inter, roboto, -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: 600;
-    font-size: 1.125rem;
+    font-size: 18px;
     padding: 0;
     margin: 0;
 }
@@ -86,7 +87,7 @@ body {
 #plugin_boh ul {
     font-family: Noigrotesk, inter, roboto, -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: 300;
-    font-size: .875rem;
+    font-size: 14px;
     padding: 0;
     margin: 0;
 }
@@ -95,7 +96,7 @@ body {
     font-family: Noigrotesk, inter, roboto, -apple-system, BlinkMacSystemFont, sans-serif;
     margin: 0;
     color: var(--text_primary);
-    font-size: .875rem;
+    font-size: 14px;
 }
 
 #plugin_boh input {
@@ -104,7 +105,7 @@ body {
     outline: none;
     background: none;
     color: var(--text_primary);
-    font-size: .875rem;
+    font-size: 14px;
     text-overflow: ellipsis;
     transition: background 100ms ease-out;
 }
@@ -115,7 +116,7 @@ body {
     outline: none;
     background: none;
     color: var(--text_primary);
-    font-size: .875rem;
+    font-size: 14px;
     text-overflow: ellipsis;
     transition: background 100ms ease-out;
     resize: none;
@@ -128,12 +129,13 @@ body {
 #plugin_boh .input-primary {
     background: var(--background_secondary);
     border-radius: 4px;
-    font-size: .875rem;
-    padding: 1rem .75rem;
+    font-size: 14px;
+    padding: 16px 12px;
 }
 
-#plugin_boh .input-primary:hover {
+#plugin_boh .input-primary:hover, #plugin_boh .input-primary:focus {
     background: var(--background_tertiary);
+    box-shadow: none;
 }
 
 #plugin_boh .disabled {
@@ -146,12 +148,12 @@ body {
 
 #plugin_boh label {
     color: var(--text_secondary);
-    font-size: .875rem;
+    font-size: 14px;
 }
 
 #plugin_boh button {
     font-family: Noigrotesk, inter, roboto, -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: .875rem;
+    font-size: 14px;
     background: none;
     border: none;
     color: var(--text_primary);
@@ -164,10 +166,10 @@ body {
     background-color: var(--interactive_primary);
     border: none;
     color: var(--text_inverse);
-    padding: .5rem .75rem;
+    padding: 8px 12px;
     border-radius: var(--border-radius_primary);
     cursor: pointer;
-    padding: .5rem .75rem;
+    padding: 8px 12px;
 }
 
 #plugin_boh .button-primary:hover {
@@ -184,8 +186,8 @@ body {
 }
 
 #plugin_boh .button_icon {
-    width: 2rem;
-    height: 2rem;
+    width: 32px;
+    height: 32px;
     border-radius: 999px;
     display: flex;
     align-items: center;
@@ -198,8 +200,8 @@ body {
 
 #plugin_boh .button_close {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 16px;
+    right: 16px;
 }
 
 #plugin_boh .hide {
@@ -210,20 +212,20 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 1rem;
+    margin-top: 16px;
 }
 
 #plugin_boh #page-link_image {
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 24px;
+    width: 24px;
 }
 
 #plugin_boh .page-link_container {
     display: flex;
     flex-direction: row;
-    padding: .75rem 1rem;
+    padding: 12px 16px;
     align-items: center;
-    gap: 1rem;
+    gap: 16px;
     align-self: stretch;
     background: var(--background_secondary);
 }
@@ -238,8 +240,8 @@ body {
 
 #plugin_boh .list-name_wrapper {
     display: flex;
-    gap: 0.5rem;
-    margin-right: 3rem;
+    gap: 8px;
+    margin-right: 48px;
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
@@ -251,9 +253,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: .25rem .5rem;
+    padding: 4px 8px;
     border-radius: var(--border-radius_primary);
-    gap: .25rem;
+    gap: 4px;
     font-size: inherit;
 }
 
@@ -270,7 +272,7 @@ body {
 }
 
 #plugin_boh #list_name {
-    min-width: 2.5rem;
+    min-width: 40px;
     display: block;
     text-align: left;
     user-select: none;
@@ -279,24 +281,25 @@ body {
 
 #plugin_boh .page-content_inputs {
     border-radius: var(--border-radius_primary);
-    padding: .25rem .5rem;
+    padding: 4px 8px;
 }
 
-#plugin_boh .page-content_inputs:hover {
+#plugin_boh .page-content_inputs:hover, #plugin_boh .page-content_inputs:focus {
     background-color: var(--background_tertiary);
+    box-shadow: none;
 }
 
 #plugin_boh .content-top_wrapper {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 1rem;
+    gap: 16px;
 }
 
 #plugin_boh .input_wrapper {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 8px;
 }
 
 #plugin_boh .clickup-list_wrapper {
@@ -313,9 +316,9 @@ body {
 #plugin_boh .clickup-list_item {
     list-style: none;
     display: flex;
-    padding: .5rem 1rem;
+    padding: 8px 16px;
     align-items: center;
-    gap: .5rem;
+    gap: 8px;
     align-self: stretch;
     background: var(--background_secondary);
     transition: background 100ms ease-out;
@@ -335,7 +338,7 @@ body {
 #plugin_boh .selected-list::after {
     content: url('data:image/svg+xml; utf8, <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.22908 14.2219L4.54883 10.5209L5.75489 9.3148L8.22908 11.7681L14.2449 5.77313L15.451 7.00003L8.22908 14.2219Z" fill="%23192222"/></svg>');
     top: 50%;
-    right: 1rem;
+    right: 16px;
     display: block;
     position: absolute;
     transform: translate(50%, -50%);
@@ -343,7 +346,7 @@ body {
 
 #plugin_boh #text_save {
     color: #A3A7A7;
-    font-size: .75rem;
+    font-size: 12px;
     font-weight: 400;
 }
 
@@ -361,11 +364,11 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1rem;
+    gap: 16px;
 }
 
 #plugin_boh .settings .content-bottom_wrapper {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
+    gap: 16px;
 }
