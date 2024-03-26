@@ -1,10 +1,28 @@
 const clickupStudioAuth = 'pk_66618625_50L0LVB3TVCFNDCEGY9KZS87PPFGZWRA';
 
 async function createTask_BOH(userName = 'Anonymous', list, category, {name, url, description}) {
-  const siteCategoryField = category ? [{
+  const siteCategoryField = 'key' in category ? [{
     id: "391becbd-90fe-457c-98a2-bf5a6c7a7723",
-    value: category,
+    value: category.key,
   }] : [];
+
+  const requestBody = {
+    name,
+    description,
+    status: 'New',
+    notify_all: false,
+    custom_fields: [
+      ...siteCategoryField,
+      {
+        id: "c6e9db3f-099f-4fec-aca5-68a1e8618070",
+        value: userName,
+      },
+      {
+        id: "20351e27-6c88-4c6f-a32d-1d87e215b3b6",
+        value: url,
+      },
+    ],
+  };
 
   const response = await fetch( `https://api.clickup.com/api/v2/list/${list}/task`, {
     method: 'POST',
@@ -12,23 +30,7 @@ async function createTask_BOH(userName = 'Anonymous', list, category, {name, url
         'Authorization': clickupStudioAuth,
         'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      name,
-      description,
-      status: 'New',
-      notify_all: false,
-      custom_fields: [
-        {
-          id: "c6e9db3f-099f-4fec-aca5-68a1e8618070",
-          value: userName,
-        },
-        {
-          id: "20351e27-6c88-4c6f-a32d-1d87e215b3b6",
-          value: url,
-        },
-        ...siteCategoryField
-      ],
-    })
+    body: JSON.stringify(requestBody)
   })
   return response;
 }

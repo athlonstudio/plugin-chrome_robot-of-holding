@@ -142,7 +142,7 @@ async function handleCreateTask_BOH(event) {
     const target = event.currentTarget;
     const pageLocation = window.location.href;
     const pageCategory = queryKeys.filter((pageQuery) => pageLocation.includes(pageQuery.query))[0];
-    const list = getFromStorage_BOH(storageKeys['LIST']).id;
+    const list = getFromStorage_BOH(storageKeys['LIST']) && getFromStorage_BOH(storageKeys['LIST']).id;
     const userName = getFromStorage_BOH(storageKeys['NAME']);
     let taskMatching = false;
 
@@ -167,8 +167,6 @@ async function handleCreateTask_BOH(event) {
     } 
 
     document.querySelector('#plugin_boh').remove();
-
-    
 }
 
 function handleSaveDebounce_BOH(saveFunction, saving, disableEl = () => {}, enableEl = () => {}) {
