@@ -49,7 +49,7 @@ let page = pageKeys.LANDING;
 const main = document.querySelector('#plugin_boh .main');
 let clickupListData;
 let localData = {
-    title: window.location.href,
+    title: document.title || window.location.href,
     description: '',
 };
 let testingStorage = {list: {name: "Default", id: 901701936084}};
