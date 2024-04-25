@@ -1,6 +1,6 @@
 const clickupStudioAuth = 'pk_66618625_50L0LVB3TVCFNDCEGY9KZS87PPFGZWRA';
 
-async function createTask_BOH(userName = 'Anonymous', list, category, {name, url, description}) {
+async function createTask_BOH(userName = 'Anonymous', list, category = {}, {name, url, description}) {
   const siteCategoryField = 'key' in category ? [{
     id: "391becbd-90fe-457c-98a2-bf5a6c7a7723",
     value: category.key,

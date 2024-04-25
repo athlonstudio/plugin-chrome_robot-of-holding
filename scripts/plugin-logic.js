@@ -1,9 +1,3 @@
-if (window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTypes.defaultPolicy) {
-    
-} else if(window.trustedTypes.defaultPolicy.name) {
-
-}
- 
 const queryKeys = [
     {
         key: 0,
@@ -36,15 +30,6 @@ const localDataKey = {
     TITLE: 'title',
     DESCRIPTION: 'description',
 }
-
-function saveToStorage_BOH(key, value) {
-    localStorage.setItem(key, JSON.stringify(value))
-}
-
-function getFromStorage_BOH(key) {
-    return JSON.parse(localStorage.getItem(key))
-}
-    
 let page = pageKeys.LANDING;
 const main = document.querySelector('#plugin_boh .main');
 let clickupListData;
@@ -53,6 +38,26 @@ let localData = {
     description: '',
 };
 let testingStorage = {list: {name: "Default", id: 901701936084}};
+const passEvent = (eventKey, detail) => new CustomEvent(eventKey, {detail});
+
+function initialGet() {
+    window.dispatchEvent(passEvent("GET_FROM_STORAGE", storageKeys['LIST']));
+    window.dispatchEvent(passEvent("GET_FROM_STORAGE", storageKeys['NAME']));
+}
+
+function saveToStorage_BOH(key, value) {
+    window.dispatchEvent(passEvent("SAVE_TO_STORAGE", {[key]: JSON.stringify(value)}));
+}
+
+function getFromStorage_BOH(key) {
+    const dataValue = document.querySelector('#plugin_boh').dataset[`get${key}`];
+    try {
+        JSON.parse(dataValue)
+    } catch (e) {
+        return dataValue;
+    }
+    return JSON.parse(dataValue);
+}
 
 function handleClose_BOH() {
     document.getElementById('plugin_boh').remove();
@@ -217,6 +222,7 @@ if(window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTyp
         createScriptURL: string => string,
         createScript: string => string,
     });
+    initialGet();
     setTimeout(() => {
         renderPage_BOH(pageKeys.LANDING)
         document.querySelector('#plugin_boh .main').style.cssText = `
@@ -230,6 +236,7 @@ if(window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTyp
         document.querySelector('#plugin_boh').style.overflow = 'visible'
     }, 600);
 } else {
+    initialGet();
     setTimeout(() => {
         renderPage_BOH(pageKeys.ERROR)
         document.querySelector('#plugin_boh .main').style.cssText = `

@@ -74,6 +74,7 @@ body {
 #plugin_boh a {
     color: var(--token_blue);
     text-decoration: underline;
+    font-size: 1em;
 }
 
 #plugin_boh h1 {
@@ -163,21 +164,21 @@ body {
 }
 
 #plugin_boh .button-primary {
-    background-color: var(--interactive_primary);
+    background-color: var(--interactive_primary) !important; 
     border: none;
-    color: var(--text_inverse);
-    padding: 8px 12px;
+    color: var(--text_inverse) !important;
+    padding: 8px 12px !important;
     border-radius: var(--border-radius_primary);
     cursor: pointer;
     padding: 8px 12px;
 }
 
 #plugin_boh .button-primary:hover {
-    background-color: var(--interactive_active);
+    background-color: var(--interactive_active) !important;
 }
 
 #plugin_boh .button-completed {
-    background-color: var(--interactive_pressed);
+    background-color: var(--interactive_pressed) !important;
     cursor: default;
 }
 
