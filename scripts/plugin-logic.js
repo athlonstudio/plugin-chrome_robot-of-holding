@@ -40,7 +40,7 @@ let localData = {
 let testingStorage = {list: {name: "Default", id: 901701936084}};
 const passEvent = (eventKey, detail) => new CustomEvent(eventKey, {detail});
 
-function initialGet() {
+function init() {
     window.dispatchEvent(passEvent("GET_FROM_STORAGE", storageKeys['LIST']));
     window.dispatchEvent(passEvent("GET_FROM_STORAGE", storageKeys['NAME']));
 }
@@ -222,7 +222,7 @@ if(window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTyp
         createScriptURL: string => string,
         createScript: string => string,
     });
-    initialGet();
+    init();
     setTimeout(() => {
         renderPage_BOH(pageKeys.LANDING)
         document.querySelector('#plugin_boh .main').style.cssText = `
@@ -236,7 +236,7 @@ if(window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTyp
         document.querySelector('#plugin_boh').style.overflow = 'visible'
     }, 600);
 } else {
-    initialGet();
+    init();
     setTimeout(() => {
         renderPage_BOH(pageKeys.ERROR)
         document.querySelector('#plugin_boh .main').style.cssText = `

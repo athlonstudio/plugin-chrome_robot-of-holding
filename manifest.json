@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Robot of Holding",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Save externally opened links into a clickup board.",
   "host_permissions": [
     "https://api.clickup.com/api/*"
@@ -18,16 +18,16 @@
   "web_accessible_resources": [{
       "resources": [
         "/index.html",
-        "/scripts/requests.js",
-        "/scripts/plugin-logic.js",
-        "/styles/index.html",
-        "/styles/popup.css"
+        "/scripts/requests.min.js",
+        "/scripts/plugin-logic.min.js",
+        "/styles/popup.min.css"
       ],
       "matches": ["<all_urls>"],
       "use_dynamic_url": true
     }],
   "content_scripts": [ {
-      "js": ["/init.js"],
+      "js": ["/init.min.js"],
+      "css": ["/styles/popup.min.css"],
       "matches": ["<all_urls>"],
       "match_about_blank": false
     } ]

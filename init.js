@@ -14,14 +14,14 @@ window.addEventListener("GET_FROM_STORAGE", ({detail}) => chrome.storage.local.g
 
 if (!blacklistedSites.find((query) => window.location.href.includes(query)) && window.history.length <= 1 && !document.referrer) {
   fetch(chrome.runtime.getURL('/index.html')).then(r => r.text()).then(html => {
-    document.body.insertAdjacentHTML('beforeend', html.replace('/styles/popup.css', chrome.runtime.getURL('/styles/popup.css')));
+   document.body.insertAdjacentHTML('beforeend', html);
     
     const requestScript = document.createElement('script');
-    requestScript.src = chrome.runtime.getURL('/scripts/requests.js');
+    requestScript.src = chrome.runtime.getURL('/scripts/requests.min.js');
     document.querySelector('#plugin_boh').appendChild(requestScript);
 
     const script = document.createElement('script');
-    script.src = chrome.runtime.getURL('/scripts/plugin-logic.js');
+    script.src = chrome.runtime.getURL('/scripts/plugin-logic.min.js');
     document.querySelector('#plugin_boh').appendChild(script);
   });
 }
