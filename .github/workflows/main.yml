@@ -11,7 +11,7 @@ jobs:
   minify:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@latest
+    - uses: actions/checkout@v3
     - name: Auto Minify
       uses: nizarmah/auto-minify@latest
     - name: Auto committing minified files
