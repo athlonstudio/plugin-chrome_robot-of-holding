@@ -19,7 +19,7 @@
       "resources": [
         "/index.html",
         "/scripts/requests.min.js",
-        "/scripts/plugin-logic.min.js",
+        "/scripts/plugin-logic.js",
         "/scripts/keys.min.js",
         "/styles/popup.min.css"
       ],
