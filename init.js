@@ -12,15 +12,15 @@ if (!blacklistedSites.find((query) => window.location.href.includes(query)) && w
    document.body.insertAdjacentHTML('beforeend', html);
     
     const requestScript = document.createElement('script');
-    requestScript.src = chrome.runtime.getURL('/scripts/requests.min.js');
+    requestScript.src = chrome.runtime.getURL('/scripts/requests.js');
     document.querySelector('#plugin_boh').appendChild(requestScript);
 
     const keysScript = document.createElement('script');
-    keysScript.src = chrome.runtime.getURL('/scripts/keys.min.js');
+    keysScript.src = chrome.runtime.getURL('/scripts/keys.js');
     document.querySelector('#plugin_boh').appendChild(keysScript);
 
     const logicScript = document.createElement('script');
-    logicScript.src = chrome.runtime.getURL('/scripts/plugin-logic.min.js');
+    logicScript.src = chrome.runtime.getURL('/scripts/plugin-logic.js');
     document.querySelector('#plugin_boh').appendChild(logicScript);
   });
 }

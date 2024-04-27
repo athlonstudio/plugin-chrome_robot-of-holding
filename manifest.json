@@ -18,17 +18,17 @@
   "web_accessible_resources": [{
       "resources": [
         "/index.html",
-        "/scripts/requests.min.js",
+        "/scripts/requests.js",
         "/scripts/plugin-logic.js",
-        "/scripts/keys.min.js",
-        "/styles/popup.min.css"
+        "/scripts/keys.js",
+        "/styles/popup.css"
       ],
       "matches": ["<all_urls>"],
       "use_dynamic_url": true
     }],
   "content_scripts": [ {
-      "js": ["/init.min.js"],
-      "css": ["/styles/popup.min.css"],
+      "js": ["/init.js"],
+      "css": ["/styles/popup.css"],
       "matches": ["<all_urls>"],
       "match_about_blank": false
     } ]
