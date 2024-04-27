@@ -20,6 +20,7 @@
         "/index.html",
         "/scripts/requests.min.js",
         "/scripts/plugin-logic.min.js",
+        "/scripts/keys.min.js",
         "/styles/popup.min.css"
       ],
       "matches": ["<all_urls>"],

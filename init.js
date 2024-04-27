@@ -4,13 +4,8 @@ const blacklistedSites = [
   'chrome://',
   'midway-auth.amazon',
 ];
-window.addEventListener("SAVE_TO_STORAGE", ({detail}) => {
-  const key = Object.keys(detail)[0];
-  
-  chrome.storage.local.set(detail);
-  document.querySelector('#plugin_boh').setAttribute(`data-get${key}`, detail[key])
-});
-window.addEventListener("GET_FROM_STORAGE", ({detail}) => chrome.storage.local.get(detail).then(res => document.querySelector('#plugin_boh').setAttribute(`data-get${detail}`, res[detail])));
+window.addEventListener("SAVE_TO_STORAGE", ({detail: {data}}) => chrome.storage.sync.set(data));
+window.addEventListener("GET_FROM_STORAGE", ({detail: {key}}) => chrome.storage.sync.get(key).then(res => window.dispatchEvent(new CustomEvent("RETURN_FROM_STORAGE", {detail: {key,[key]: res[key]}}))));
 
 if (!blacklistedSites.find((query) => window.location.href.includes(query)) && window.history.length <= 1 && !document.referrer) {
   fetch(chrome.runtime.getURL('/index.html')).then(r => r.text()).then(html => {
@@ -20,8 +15,12 @@ if (!blacklistedSites.find((query) => window.location.href.includes(query)) && w
     requestScript.src = chrome.runtime.getURL('/scripts/requests.min.js');
     document.querySelector('#plugin_boh').appendChild(requestScript);
 
-    const script = document.createElement('script');
-    script.src = chrome.runtime.getURL('/scripts/plugin-logic.min.js');
-    document.querySelector('#plugin_boh').appendChild(script);
+    const keysScript = document.createElement('script');
+    keysScript.src = chrome.runtime.getURL('/scripts/keys.min.js');
+    document.querySelector('#plugin_boh').appendChild(keysScript);
+
+    const logicScript = document.createElement('script');
+    logicScript.src = chrome.runtime.getURL('/scripts/plugin-logic.min.js');
+    document.querySelector('#plugin_boh').appendChild(logicScript);
   });
 }

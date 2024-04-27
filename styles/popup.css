@@ -357,7 +357,7 @@ body {
 
 /*SETTINGS*/
 
-#plugin_boh .settings h1 {
+#plugin_boh .settings h1, #plugin_boh .already-saved h1 {
     display: inline;
 }
 
