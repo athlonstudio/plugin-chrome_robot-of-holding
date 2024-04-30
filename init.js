@@ -9,12 +9,11 @@ window.addEventListener("GET_FROM_STORAGE", ({detail: {key}}) => chrome.storage.
 
 if (!blacklistedSites.find((query) => window.location.href.includes(query)) && window.history.length <= 1 && !document.referrer) {
   fetch(chrome.runtime.getURL('/index.html')).then(r => r.text()).then(html => {
-    const plugin = document.querySelector('#plugin_boh');
    document.body.insertAdjacentHTML('beforeend', html);
    
-   plugin.append(Object.assign(document.createElement('script'),{src:chrome.runtime.getURL('/scripts/requests.js')}));
-   plugin.append(Object.assign(document.createElement('script'),{src:chrome.runtime.getURL('/scripts/keys.js')}));
+   document.querySelector('#plugin_boh').appendChild(Object.assign(document.createElement('script'),{src:chrome.runtime.getURL('/scripts/requests.js')}));
+   document.querySelector('#plugin_boh').appendChild(Object.assign(document.createElement('script'),{src:chrome.runtime.getURL('/scripts/keys.js')}));
 
-    setTimeout(() => plugin.append(Object.assign(document.createElement('script'),{src:chrome.runtime.getURL('/scripts/plugin-logic.js')})), 40);
+    setTimeout(() => document.querySelector('#plugin_boh').appendChild(Object.assign(document.createElement('script'),{src:chrome.runtime.getURL('/scripts/plugin-logic.js')})), 40);
   });
 }
