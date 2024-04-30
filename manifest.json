@@ -19,9 +19,9 @@
       "resources": [
         "/index.html",
         "/scripts/requests.js",
-        "/scripts/plugin-logic.js",
         "/scripts/keys.js",
-        "/styles/popup.css"
+        "/styles/popup.css",
+        "/scripts/plugin-logic.js"
       ],
       "matches": ["<all_urls>"],
       "use_dynamic_url": true

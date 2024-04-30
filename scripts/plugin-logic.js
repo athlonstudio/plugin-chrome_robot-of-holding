@@ -40,31 +40,18 @@ function handleClose_BOH() {
     document.getElementById('plugin_boh').remove();
 }
 
-async function handleDuplicateTask_BOH() {
-    let taskMatching = false;
-    const list = await getFromStorage_BOH(storageKeys['LIST']);
-    
-    if (list && list.id) {
-        await getTasks_BOH(list.id).then((data) => {
+async function handleDuplicateTask_BOH() {  
+    let matchedLists;  
+    if (!clickupListData) {    
+        await getLists_BOH().then((data) => clickupListData = data.lists);
+    }
 
-            taskMatching = !!data.tasks.find((taskItem) => taskItem['custom_fields'].filter((customField) => customField.name === 'Link')[0].value)
-        });
-    }
-    if (taskMatching) {
-        renderPage_BOH(pageKeys['ALREADY_SAVED']);
-        main.style.cssText = `
-            translate: 0;
-            opacity: 1;
-            visibility: visible;
-        `;
-        
-        setTimeout(() => handleClose_BOH(), 2000);
-        return false;
-    }
-    return true;
+    matchedLists =  clickupListData.map((list) => getTasks_BOH(list.id).then(({tasks}) => tasks.find((task) => task['custom_fields'].filter(({id}) => id === "82f86939-4bfd-4ad5-98e3-57c089304cb5")[0].value === pageLocation) || null));
+
+    return await matchedLists;
 }
 
-async function renderPage_BOH(pageKey) {
+async function renderPage_BOH(pageKey, options) {
     main.innerHTML = '';
     main.classList.remove(page)
     main.classList.add(pageKey)
@@ -76,6 +63,7 @@ async function renderPage_BOH(pageKey) {
 
     switch (pageKey) {
         case pageKeys['LANDING']:
+           options && options.duplicateList ? selectElement('#matching_list').innerHTML = `This site already saved to the ${options.duplicateList.name} list.` : null;
             selectElement('#list_name').innerHTML = (list && list.name)  || 'Select a list...';
             selectElement('#page-link_title').value = localData[localDataKey['TITLE']];
             selectElement('#page-link_description').value = localData[localDataKey['DESCRIPTION']];
@@ -128,6 +116,7 @@ async function openList_BOH(event) {
     if(!clickupListData) {    
         await getLists_BOH().then((data) => clickupListData = data.lists);
     }
+
     if (listContainer.children.length === 0){
         clickupListData.forEach((list, index) => renderListRow_BOH(listContainer, list, index, selectedList))
     }
@@ -172,7 +161,7 @@ async function handleCreateTask_BOH(event) {
         target.innerHTML = 'Saved';
     
         setTimeout(() => document.querySelector('#plugin_boh').style.display = 'none', 2000);
-        await createTask_BOH(userName, list, pageCategory, task);
+        await createTask_BOH(userName, list.id, pageCategory, task);
         handleClose_BOH();
     }
 }
@@ -219,20 +208,15 @@ if(window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTyp
         createScriptURL: string => string,
         createScript: string => string,
     });
-    handleDuplicateTask_BOH().then((res)=> {
-        if (res) {
-            setTimeout(() => {
-                renderPage_BOH(pageKeys.LANDING)
-                main.style.cssText = `
-                    translate: 0;
-                    opacity: 1;
-                    visibility: visible;
-                `;
-            }, 400);
-            setTimeout(() => {
-                document.querySelector('#plugin_boh').style.overflow = 'visible'
-            }, 600);
-        }
+    handleDuplicateTask_BOH().then(async (res)=> {
+        var duplicateTask = await res.find((list) => list !== null);
+        renderPage_BOH(pageKeys.LANDING, {duplicateList: duplicateTask.list})
+        main.style.cssText = `
+            translate: 0;
+            opacity: 1;
+            visibility: visible;
+        `;
+        setTimeout(() => document.querySelector('#plugin_boh').style.overflow = 'visible', 50);
     });
 } else {
     setTimeout(() => {

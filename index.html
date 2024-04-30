@@ -21,7 +21,8 @@
           <input id="page-link_description" class="page-content_inputs" name="page-description" placeholder="Add note (optional)…" type="text"></input>
         </div>
     </div>
-    <button id='button_save' class="button-primary">Save</button>
+      <p id='matching_list' class='text_alert'></p>
+      <button id='button_save' class="button-primary">Save</button>
     <div class="content-bottom_wrapper">
       <span data-load='studio-plugins' ></span>
       <button id="button_settings" data-load='settings' class="button_icon"></button>
@@ -29,12 +30,6 @@
   </template>
   <template id="page_onboarding">
     Onboarding
-  </template>
-  <template id="page_error">
-    <h1 class="list-name_wrapper">Uh oh... I don't think this page supports the plugin.</h1>
-  </template>
-  <template id="page_already-saved">
-    <h1 class="list-name_wrapper">This link has already been saved to the <span id='already-saved_list'>[LIST]</span> list.</h1>
   </template>
   <template id="page_settings">
     <div class="content-top_wrapper">
