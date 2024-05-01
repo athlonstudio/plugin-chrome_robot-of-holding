@@ -210,7 +210,7 @@ if(window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTyp
     });
     handleDuplicateTask_BOH().then(async (res)=> {
         var duplicateTask = await res.find((list) => list !== null);
-        renderPage_BOH(pageKeys.LANDING, {duplicateList: duplicateTask.list})
+        renderPage_BOH(pageKeys.LANDING, {duplicateList: duplicateTask && duplicateTask.list})
         main.style.cssText = `
             translate: 0;
             opacity: 1;
