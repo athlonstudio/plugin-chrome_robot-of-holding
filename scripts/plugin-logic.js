@@ -11,6 +11,7 @@ let localData = {
 };
 let testingStorage = {list: {name: "Default", id: 901701936084}};
 let promiseHolder ={};
+let duplicateLists = [];
 
 window.addEventListener("RETURN_FROM_STORAGE", ({detail}) => {
     promiseHolder[`resolver-${detail.key}`](detail)
@@ -51,7 +52,7 @@ async function handleDuplicateTask_BOH() {
     return await matchedLists;
 }
 
-async function renderPage_BOH(pageKey, options) {
+async function renderPage_BOH(pageKey) {
     main.innerHTML = '';
     main.classList.remove(page)
     main.classList.add(pageKey)
@@ -63,8 +64,8 @@ async function renderPage_BOH(pageKey, options) {
 
     switch (pageKey) {
         case pageKeys['LANDING']:
-            if(options && options.duplicateLists && options.duplicateLists.length) {
-                selectElement('#matching_list').innerHTML = `This site already saved to the ${options.duplicateLists.join(', ').replace(/, ((?:.(?!, ))+)$/, ' and $1')} list.`;
+            if(duplicateLists) {
+                selectElement('#matching_list').innerHTML = `This site already saved to the ${duplicateLists.join(', ').replace(/, ((?:.(?!, ))+)$/, ' and $1')} list.`;
                 selectElement('#matching_list').classList.toggle('show');
             }
             selectElement('#list_name').innerHTML = (list && list.name)  || 'Select a list...';
@@ -212,14 +213,10 @@ if(window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTyp
         createScript: string => string,
     });
 
-    function renderPage(duplicateLists) {
-        console.log(duplicateLists)
-    }
-
     handleDuplicateTask_BOH().then((res)=> {
         Promise.all(res).then((values) => {
-            const duplicateLists = values.filter(list => list).map((list) => list.list.name)
-            renderPage_BOH(pageKeys.LANDING, {duplicateLists})
+            duplicateLists = values.filter(list => list).map((list) => list.list.name);
+            renderPage_BOH(pageKeys.LANDING);
             main.style.cssText = `
                 translate: 0;
                 opacity: 1;
