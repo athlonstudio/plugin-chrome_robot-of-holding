@@ -128,11 +128,14 @@ body {
 }
 
 #plugin_boh .text_alert {
-    display: block;
+    display: none;
     color: #107B49;
-    display: flex;
     padding: 12px 16px;
     background: #E4F4EA;
+}
+
+#plugin_boh .show {
+    display: flex;
 }
 
 #plugin_boh .input-primary {

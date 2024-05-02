@@ -63,7 +63,10 @@ async function renderPage_BOH(pageKey, options) {
 
     switch (pageKey) {
         case pageKeys['LANDING']:
-           options && options.duplicateList ? selectElement('#matching_list').innerHTML = `This site already saved to the ${options.duplicateList.name} list.` : null;
+            if(options && options.duplicateList) {
+                selectElement('#matching_list').innerHTML = `This site already saved to the ${options.duplicateList.name} list.`;
+                selectElement('#matching_list').classList.toggle('show');
+            }
             selectElement('#list_name').innerHTML = (list && list.name)  || 'Select a list...';
             selectElement('#page-link_title').value = localData[localDataKey['TITLE']];
             selectElement('#page-link_description').value = localData[localDataKey['DESCRIPTION']];
