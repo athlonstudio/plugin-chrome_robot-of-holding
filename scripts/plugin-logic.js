@@ -63,8 +63,8 @@ async function renderPage_BOH(pageKey, options) {
 
     switch (pageKey) {
         case pageKeys['LANDING']:
-            if(options && options.duplicateList) {
-                selectElement('#matching_list').innerHTML = `This site already saved to the ${options.duplicateList.name} list.`;
+            if(options && options.duplicateLists && options.duplicateLists.length) {
+                selectElement('#matching_list').innerHTML = `This site already saved to the ${options.duplicateLists.join(', ').replace(/, ((?:.(?!, ))+)$/, ' and $1')} list.`;
                 selectElement('#matching_list').classList.toggle('show');
             }
             selectElement('#list_name').innerHTML = (list && list.name)  || 'Select a list...';
@@ -200,7 +200,7 @@ async function handleNameInput_BOH() {
 
 function handleTaskInput_BOH(element, dataKey) {
     let saving = false;
-    
+
     element.value = localData[dataKey];
     element.addEventListener('keydown', (event) => handleSaveDebounce_BOH(() => localData[dataKey] = event.target.value, saving));
 }
@@ -211,16 +211,22 @@ if(window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTyp
         createScriptURL: string => string,
         createScript: string => string,
     });
-    handleDuplicateTask_BOH().then(async (res)=> {
-        var duplicateTask = await res.find((list) => list !== null);
-        console.log(duplicateTask);
-        renderPage_BOH(pageKeys.LANDING, {duplicateList: duplicateTask && duplicateTask.list})
-        main.style.cssText = `
-            translate: 0;
-            opacity: 1;
-            visibility: visible;
-        `;
-        setTimeout(() => document.querySelector('#plugin_boh').style.overflow = 'visible', 50);
+
+    function renderPage(duplicateLists) {
+        console.log(duplicateLists)
+    }
+
+    handleDuplicateTask_BOH().then((res)=> {
+        Promise.all(res).then((values) => {
+            const duplicateLists = values.filter(list => list).map((list) => list.list.name)
+            renderPage_BOH(pageKeys.LANDING, {duplicateLists})
+            main.style.cssText = `
+                translate: 0;
+                opacity: 1;
+                visibility: visible;
+            `;
+            setTimeout(() => document.querySelector('#plugin_boh').style.overflow = 'visible', 50);
+        })
     });
 } else {
     setTimeout(() => {
