@@ -213,6 +213,7 @@ if(window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTyp
     });
     handleDuplicateTask_BOH().then(async (res)=> {
         var duplicateTask = await res.find((list) => list !== null);
+        console.log(duplicateTask);
         renderPage_BOH(pageKeys.LANDING, {duplicateList: duplicateTask && duplicateTask.list})
         main.style.cssText = `
             translate: 0;
