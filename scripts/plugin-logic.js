@@ -64,7 +64,7 @@ async function renderPage_BOH(pageKey) {
 
     switch (pageKey) {
         case pageKeys['LANDING']:
-            if(duplicateLists) {
+            if(duplicateLists.length) {
                 selectElement('#matching_list').innerHTML = `This site already saved to the ${duplicateLists.join(', ').replace(/, ((?:.(?!, ))+)$/, ' and $1')} list.`;
                 selectElement('#matching_list').classList.toggle('show');
             }
