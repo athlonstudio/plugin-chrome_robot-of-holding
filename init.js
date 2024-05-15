@@ -7,7 +7,7 @@ const blacklistedSites = [
 window.addEventListener("SAVE_TO_STORAGE", ({detail: {data}}) => chrome.storage.sync.set(data));
 window.addEventListener("GET_FROM_STORAGE", ({detail: {key}}) => chrome.storage.sync.get(key).then(res => window.dispatchEvent(new CustomEvent("RETURN_FROM_STORAGE", {detail: {key,[key]: res[key]}}))));
 
-if (!blacklistedSites.find((query) => window.location.href.includes(query)) && window.history.length <= 1 && !document.referrer) {
+if (!blacklistedSites.find((query) => window.location.href.includes(query)) && window.history.length <= 1) {
   fetch(chrome.runtime.getURL('/index.html')).then(r => r.text()).then(html => {
    document.body.insertAdjacentHTML('beforeend', html);
    
